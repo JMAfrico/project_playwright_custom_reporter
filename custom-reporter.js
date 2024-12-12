@@ -1,33 +1,41 @@
-/** @implements {import('@playwright/test/reporter').Reporter} */
 class MyReporter {
-  constructor(options) {
-    console.log(`Iniciando automação ${options.customOption}`);
-  }
+
 
   onBegin(config, suite) {
-    console.log(`Executando ${suite.allTests().length} teste(s)`);
+    console.log(`Iniciando execução de: ${suite.allTests().length} teste(s)`);
   }
 
   onTestBegin(test) {
-    console.log(`Iniciando teste '${test.title}'`);
+    console.log(`Iniciando '${test.title}'`);
+    console.log(`********************************************************************`)
   }
 
   onStepBegin(test, result, step) {
-      console.log(`Init Step: ${step.title}`);
+    if (step.category != 'hook') {
+      if (step.category != 'fixture') {
+        console.log(`--------------------------------------------------------------------`)
+        console.log(`>>>>>> Step: ${step.title}`);
+      }
+    }
   }
 
   onStepEnd(test, result, step) {
+
   }
 
   onTestEnd(test, result) {
-    console.log(`Teste '${test.title}' Finalizado`);
-    console.log(`Resultado: '${result.status}`);
+    console.log(``)
+    console.log(`********************************************************************`)
+    console.log(`Execução '${test.title}' Finalizada`);
+    console.log(`Resultado: ${result.status}`);
+    console.log(`********************************************************************`)
 
   }
 
-  onEnd(result) {
-    console.log(`Resultado da execução: ${result.status}`);
-  }
+  //onEnd(result) {
+  //  console.log(`Resultado geral: ${result.status}`);
+  //  console.log(`**********************************************************************`)
+  //}
 }
 
 module.exports = MyReporter;
